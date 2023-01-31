@@ -13,12 +13,12 @@ import javax.persistence.EntityListeners;
 import javax.persistence.MappedSuperclass;
 import java.time.LocalDateTime;
 
-@EntityListeners(AuditingEntityListener.class)
+@EntityListeners(AuditingEntityListener.class) //이벤트 동작으로 동작한다는걸 알려줌
 @MappedSuperclass
 @Getter
 public class BaseEntity {
-
-    @CreatedDate
+    /** */
+    @CreatedDate //생성자 느낌
     @Column(updatable = false)
     private LocalDateTime createdDate;
 
@@ -32,6 +32,7 @@ public class BaseEntity {
     @LastModifiedBy
     @Column(updatable = false)
     private String lastModifiedBy;
+    /** */
 
     public LocalDateTime getCreatedDate() {
         return createdDate;

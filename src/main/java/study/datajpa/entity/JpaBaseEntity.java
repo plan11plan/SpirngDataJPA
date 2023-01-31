@@ -9,12 +9,14 @@ import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import java.time.LocalDateTime;
 
-@MappedSuperclass
+@MappedSuperclass // 진짜 상속은 아님. 속성만 상속
 @Data
 @Getter
-
+/**
+ *  생성날짜. 수정날짜 박아주는 클래스
+ */
 public class JpaBaseEntity {
-    @Column(updatable = false)
+    @Column(updatable = false) // 변경불가.
     private LocalDateTime createdDate;
     private LocalDateTime updatedDate;
     @PrePersist

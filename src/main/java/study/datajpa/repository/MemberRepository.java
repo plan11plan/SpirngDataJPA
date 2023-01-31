@@ -53,18 +53,31 @@ public interface MemberRepository extends JpaRepository<Member,Long>,MemberRepos
 
     @Query("select m from Member m join fetch m.team")
     List<Member> findMemberFetchJoin();
-
+ /**
+  *
+  * @EntityGraph jpql에 페치조인 해왔지만.
+  * 메소드명으로 패치조인 할 수 있게함
+  *  엔티티그래프는 패치조인이 베이스로 돼있음
+  *  jpql 없이도 객체 그래프를 엮어서 성능 최적화!
+  * */
     @Override
     @EntityGraph(attributePaths = {"team"})
     List<Member> findAll();
 
-    @EntityGraph(attributePaths = {"trem"})
+    // JPQL에 엔티티 그래프 같이 사용 가능해요.
+    @EntityGraph(attributePaths = {"team"})
     @Query("select m from Member m")
     List <Member> findMemberEntityGraph();
 
+    // 메소드 이름으로 엔티티 그래프도 가능 !
     @EntityGraph(attributePaths = {"team"})
     List<Member> findEntityGraphByUsername(@Param("username")String username);
 
+
+    /**
+     * 진짜 조회만 할때 최적화 하는 코드 -> @QueryHints
+     * 근데 별 효과 없긴함. 진짜 중요한 API 만 적용!
+     */
     @QueryHints(value= @QueryHint(name = "org.hibernate.readOnly", value ="true"))
     Member findReadOnlyByUsername(String username);
 

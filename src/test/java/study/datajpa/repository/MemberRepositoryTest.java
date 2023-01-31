@@ -143,7 +143,9 @@ public class MemberRepositoryTest {
         memberRepository.save(new Member("member4",21));
         memberRepository.save(new Member("member5",40));
         int resultCount = memberRepository.bulkAgePlus(20);
-
+        /**
+         * 벌크연산은 영속성을 가져오지 않고 바로 DB에서 가져오기 때문에  flush clear 필수
+         */
         em.flush();
         em.clear();
 
